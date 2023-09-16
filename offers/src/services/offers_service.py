@@ -1,2 +1,2 @@
 async def get_offers():
-    return {"message": "Hello World"}
+    return await {"message": "Hello World"}

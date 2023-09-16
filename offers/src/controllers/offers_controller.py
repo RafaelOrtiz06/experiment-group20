@@ -6,4 +6,4 @@ router = APIRouter(prefix='/offers')
 
 @router.get('/')
 async def get_offers():
-    return await offers_service.get_offers()
+    return offers_service.get_offers()
