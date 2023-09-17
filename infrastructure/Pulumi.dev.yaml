@@ -1,4 +1,3 @@
 config:
   gcp:project: architecture-experiment
   gcp:zone: us-central1
-  gcp:k8s-cluster-name: experiment

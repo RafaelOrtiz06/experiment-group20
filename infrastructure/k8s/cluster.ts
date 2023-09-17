@@ -4,8 +4,8 @@ import * as k8s from '@pulumi/kubernetes';
 
 const config = new pulumi.Config();
 const environment = pulumi.getStack();
-export const clusterName = `${config.require('gcp:k8s-cluster-name')}-${environment}`;
 
+export const clusterName = `experiment-${environment}`;
 
 // Create a GKE cluster
 const engineVersion = gcp.container.getEngineVersions().then(v => v.latestMasterVersion);
