@@ -18,7 +18,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 
            'us-central1-docker.pkg.dev/architecture-experiment/experiment/offers:latest', 
-           '.']
+           './offers']
 
   # Docker Push
   - name: 'gcr.io/cloud-builders/docker'
