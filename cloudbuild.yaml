@@ -12,6 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Specify the logs_bucket field to resolve the error
+options:
+  logging: CLOUD_LOGGING_ONLY  # You can use CLOUD_LOGGING_ONLY or NONE, depending on your preference
+
+
 # [START cloudbuild_basic_config]
 steps:
   # Docker Build
