@@ -18,7 +18,7 @@ spec:
         - name: offers
           image: us-central1-docker.pkg.dev/architecture-experiment/experiment/offers:latest
           ports:
-            - containerPort: 8000
+            - containerPort: 3000
           # Realizar pull siempre a la imagen
           imagePullPolicy: Always
 
@@ -47,7 +47,7 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8000
+      targetPort: 3000
       nodePort: 31019
 
 ---
@@ -62,7 +62,7 @@ spec:
   - http:
       paths:
       - pathType: Prefix
-        path: /offers
+        path: /
         backend:
           service:
             name: offers-service

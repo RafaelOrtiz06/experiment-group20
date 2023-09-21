@@ -2,7 +2,7 @@ FROM python
 
 RUN groupadd -r user && useradd -r -g user user
 
-EXPOSE 8000
+EXPOSE 3000
 
 WORKDIR /offers_microservice
 
