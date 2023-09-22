@@ -38,9 +38,7 @@ steps:
       - |
         gcloud container clusters get-credentials group20-experiment \
         --region us-central1 \
-        --project architecture-experiment
- \
-  
+        --project architecture-experiment \
         export CLOUDSDK_COMPUTE_REGION=us-central1
 
   # Restart Pods using kubectl
