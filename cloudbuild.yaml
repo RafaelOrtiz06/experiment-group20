@@ -39,10 +39,14 @@ steps:
         gcloud container clusters get-credentials group20-experiment \
         --region us-central1 \
         --project architecture-experiment
-      
-  # Restart Pods using kubectl
-  - name: 'gcr.io/cloud-builders/kubectl'
-    args: ['rollout', 'restart', 'deployment', 'offers']
+
+ # Set Cluster, Region, and Zone environment variables
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        kubectl rollout restart deployment offers
 
   # # Entrypoint, timeout and environment variables
   # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
