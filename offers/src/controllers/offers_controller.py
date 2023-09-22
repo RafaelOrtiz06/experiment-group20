@@ -11,4 +11,4 @@ async def get_offers():
 
 @router.get(path='/health')
 async def get_offers():
-    return await offers_service.get_offers()
+    return {"message": "Ok"}

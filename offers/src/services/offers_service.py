@@ -1,2 +1,4 @@
+from src.utils.mock import mock_users
+
 async def get_offers():
-    return {"message": "Hello World"}
+    return mock_users

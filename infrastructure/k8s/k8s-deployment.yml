@@ -30,9 +30,9 @@ metadata:
 spec:
   healthCheck:
     checkIntervalSec: 30
-    port: 8000
+    port: 3000
     type: HTTP
-    requestPath: /offers
+    requestPath: /health
 ---
 kind: Service
 apiVersion: v1
