@@ -30,6 +30,11 @@ steps:
     args: ['push', 
            'us-central1-docker.pkg.dev/architecture-experiment/experiment/offers:latest']
 
+  # Restart Pods using kubectl
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args: ['rollout', 'restart', 'deployment', 'offers']
+
+
   # # Entrypoint, timeout and environment variables
   # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   #   entrypoint: 'gcloud'

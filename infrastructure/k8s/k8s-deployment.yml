@@ -68,4 +68,3 @@ spec:
             name: offers-service
             port: 
               number: 80
-     
