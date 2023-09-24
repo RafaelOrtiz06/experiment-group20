@@ -12,8 +12,9 @@ services:
   offers-microservice:
     build:
       context: ./offers
-    environment:
-      AUTH_SERVICE: http://auth-microservice:3000
+    env_file:
+      - ./offers/.env
+
     depends_on:
       - auth-microservice
     ports:
