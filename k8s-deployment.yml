@@ -32,7 +32,7 @@ spec:
     checkIntervalSec: 30
     port: 3000
     type: HTTP
-    requestPath: /health
+    requestPath: /offers/health
 ---
 kind: Service
 apiVersion: v1
@@ -62,7 +62,7 @@ spec:
   - http:
       paths:
       - pathType: Prefix
-        path: /
+        path: /offers
         backend:
           service:
             name: offers-service

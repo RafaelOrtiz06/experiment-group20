@@ -2,7 +2,7 @@ from fastapi import APIRouter
 
 import src.services.offers_service as offers_service
 
-router = APIRouter()
+router = APIRouter(prefix='/offers')
 
 @router.get(path='/')
 async def get_offers():
@@ -11,4 +11,4 @@ async def get_offers():
 
 @router.get(path='/health')
 async def get_offers():
-    return {"message": "Ok 1"}
+    return {"message": "Ok"}
