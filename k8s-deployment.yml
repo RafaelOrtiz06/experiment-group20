@@ -51,6 +51,59 @@ spec:
       nodePort: 31019
 
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth
+  labels:
+    app: auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: offers
+          image: us-central1-docker.pkg.dev/architecture-experiment/experiment/auth:latest
+          ports:
+            - containerPort: 3000
+          # Realizar pull siempre a la imagen
+          imagePullPolicy: Always
+
+---
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: auth-config
+spec:
+  healthCheck:
+    checkIntervalSec: 30
+    port: 3000
+    type: HTTP
+    requestPath: /auth/health
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: auth-service
+  annotations:
+    cloud.google.com/backend-config: '{"default": "offers-config"}'
+spec:
+  type: NodePort
+  selector:
+    app: auth
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+      nodePort: 31017
+
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -59,12 +112,19 @@ metadata:
     name: gateway-ingress-8
 spec:
   rules:
-  - http:
-      paths:
-      - pathType: Prefix
-        path: /offers
-        backend:
-          service:
-            name: offers-service
-            port: 
-              number: 80
+    - http:
+        paths:
+          - pathType: Prefix
+            path: /offers
+            backend:
+              service:
+                name: offers-service
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: /auth
+            backend:
+              service:
+                name: auth-service
+                port:
+                  number: 80

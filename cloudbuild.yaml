@@ -14,37 +14,61 @@
 
 # Specify the logs_bucket field to resolve the error
 options:
-  logging: CLOUD_LOGGING_ONLY  # You can use CLOUD_LOGGING_ONLY or NONE, depending on your preference
-
+  logging: CLOUD_LOGGING_ONLY # You can use CLOUD_LOGGING_ONLY or NONE, depending on your preference
 
 # [START cloudbuild_basic_config]
 steps:
-  # Docker Build
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 
-           'us-central1-docker.pkg.dev/architecture-experiment/experiment/offers:latest', 
-           './offers']
-
-  # Docker Push
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 
-           'us-central1-docker.pkg.dev/architecture-experiment/experiment/offers:latest']
-
- # Set Cluster, Region, and Zone environment variables
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
+  # Docker Build Offers
+  - name: "gcr.io/cloud-builders/docker"
     args:
-      - '-c'
+      [
+        "build",
+        "-t",
+        "us-central1-docker.pkg.dev/architecture-experiment/experiment/offers:latest",
+        "./offers",
+      ]
+
+    # Docker Build Auth
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "us-central1-docker.pkg.dev/architecture-experiment/experiment/auth:latest",
+        "./auth",
+      ]
+
+  # Docker Push Offers
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "push",
+        "us-central1-docker.pkg.dev/architecture-experiment/experiment/offers:latest",
+      ]
+
+  # Docker Push Auth
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "push",
+        "us-central1-docker.pkg.dev/architecture-experiment/experiment/auth:latest",
+      ]
+
+  # Set Cluster, Region, and Zone environment variables
+  - name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
+    args:
+      - "-c"
       - |
         gcloud container clusters get-credentials group20-experiment \
         --region us-central1 \
         --project architecture-experiment
 
- # Set Cluster, Region, and Zone environment variables
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
+  # Set Cluster, Region, and Zone environment variables
+  - name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
     args:
-      - '-c'
+      - "-c"
       - |
         kubectl rollout restart deployment offers
 
@@ -52,11 +76,12 @@ steps:
   # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   #   entrypoint: 'gcloud'
   #   timeout: 240s
-  #   args: ['compute', 'instances', 
+  #   args: ['compute', 'instances',
   #          'create-with-container', 'my-vm-name',
-  #          '--container-image', 
+  #          '--container-image',
   #          'us-central1-docker.pkg.dev/architecture-experiment/experiment/offers:latest']
   #   env:
   #     - 'CLOUDSDK_COMPUTE_REGION=us-central1'
   #     - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+
 # [END cloudbuild_basic_config]
