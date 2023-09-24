@@ -68,7 +68,7 @@ spec:
         app: auth
     spec:
       containers:
-        - name: offers
+        - name: auth
           image: us-central1-docker.pkg.dev/architecture-experiment/experiment/auth:latest
           ports:
             - containerPort: 3000
@@ -92,7 +92,7 @@ apiVersion: v1
 metadata:
   name: auth-service
   annotations:
-    cloud.google.com/backend-config: '{"default": "offers-config"}'
+    cloud.google.com/backend-config: '{"default": "auth-config"}'
 spec:
   type: NodePort
   selector:

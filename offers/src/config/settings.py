@@ -1,2 +1,2 @@
 import os
-AUTH_SERVICE = os.environ.get('AUTH_SERVICE')
+AUTH_SERVICE = 'http://34.160.208.119'
