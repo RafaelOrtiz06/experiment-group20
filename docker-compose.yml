@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  auth-microservice:
+    build:
+      context: ./auth
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./auth/:/auth_microservice/
+
+  offers-microservice:
+    build:
+      context: ./offers
+    environment:
+      AUTH_SERVICE: http://auth-microservice:3000
+    depends_on:
+      - auth-microservice
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./offers/:/offers_microservice/
